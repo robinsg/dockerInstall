@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    centos:
+      hosts:
+        t500:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    containers:
+       hosts:
+         c[01:03]-docker:
+           ansible_connection: lxd
