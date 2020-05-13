@@ -4,8 +4,8 @@ all:
     centos:
       hosts:
         t500:
-      vars:
-        ansible_python_interpreter: /usr/bin/python3
+      #vars:
+      #  ansible_python_interpreter: /usr/bin/python3
 
     containers:
        hosts:
