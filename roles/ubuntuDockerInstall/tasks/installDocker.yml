@@ -1,0 +1,17 @@
+---
+# tasks file for roles/ubuntuDockerInstall
+- name: Install docker.io
+  delegate_to: "{{ item }}"
+  apt:
+    name: docker.io
+    state: present
+  register: dockerInstalled
+
+- name: Start and enable docker at restart
+  delegate_to: "{{ item }}"
+  systemd:
+    state: started
+    name: docker
+    enabled: yes
+  when: dockerInstalled.changed
+    

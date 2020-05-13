@@ -1,2 +1,6 @@
 ---
 # defaults file for roles/ubuntuDockerInstall
+container:
+  - c01-docker
+  #- c02-docker
+  #- c03-docker

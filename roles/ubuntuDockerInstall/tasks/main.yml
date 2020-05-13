@@ -1,2 +1,15 @@
 ---
-# tasks file for roles/ubuntuDockerInstall
+# main.yml
+# tasks file for roles/ubuntuDockerinstall
+
+- name: Set LXD default server to current inventory host
+  delegate_to: localhost
+  command: lxc remote switch "{{ inventory_hostname }}"
+  
+- name: Install and enable docker
+  include_tasks:  installDocker.yml
+  with_items: "{{ container }}"
+
+- name: Set LXD default server back to local
+  delegate_to: localhost
+  command: lxc remote switch local
