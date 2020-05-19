@@ -4,7 +4,10 @@
 
 - name: Set LXD default server to current inventory host
   delegate_to: localhost
-  command: lxc remote switch "{{ inventory_hostname }}"
+#  command: lxc remote switch "{{ inventory_hostname }}"
+  command: lxc remote switch "{{ item }}"
+  with_items: "{{ lxdHosts }}"
+  run_once: true
   
 - name: Install and enable docker
   include_tasks:  installDocker.yml
@@ -13,3 +16,4 @@
 - name: Set LXD default server back to local
   delegate_to: localhost
   command: lxc remote switch local
+  run_once: true

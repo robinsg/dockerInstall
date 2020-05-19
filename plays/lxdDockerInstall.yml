@@ -2,7 +2,7 @@
 # ./lxdDockerInstall.yml
 #
 - name: Install Docker in to containers
-  hosts: centos
-  gather_facts: true
+  hosts: containers
+  gather_facts: false
   roles:
     - ubuntuDockerInstall

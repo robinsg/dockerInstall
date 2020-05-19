@@ -9,5 +9,5 @@ all:
 
     containers:
        hosts:
-         c[01:03]-docker:
+         c[01:01]-docker:
            ansible_connection: lxd
