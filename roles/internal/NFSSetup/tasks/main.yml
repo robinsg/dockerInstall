@@ -1,0 +1,29 @@
+---
+# tasks file for roles/internal/NFSsetup
+- name: Install NFS common and network tools
+  apt:
+    name:
+      - nfs-common
+      - net-tools
+    state: present
+
+- name: Add NFS server host name to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ NFSServerIP }} {{ NFSServerName }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create a directory for the NFS mount
+  file:
+    path: "{{ MountDir }}"
+    state: directory
+    mode: '0755'
+
+- name: Mount the NFS share
+  mount:
+    src: "{{ NFSServerName }}:{{ NFSMount }}"
+    path: "{{ MountDir }}"
+    state: mounted
+    fstype: nfs

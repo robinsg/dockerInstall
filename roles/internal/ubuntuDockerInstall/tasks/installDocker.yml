@@ -31,19 +31,17 @@
     repo: deb https://download.docker.com/linux/ubuntu focal stable
     state: present
 
-- name: Install docker.io
+- name: Install docker.io and docker-compose
   apt:
-    name: docker.io
+    name:
+      - docker.io
+      - docker-compose
     state: present
 
 - name: Install Docker Module for Python
   pip:
     name: docker
 
-- name: Pull default Docker image
-  docker_image:
-    name: ubuntu
-    source: pull
 
 - name: Start and enable docker at restart
   delegate_to: "{{ item }}"

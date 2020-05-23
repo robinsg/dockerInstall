@@ -1,0 +1,6 @@
+---
+# tasks file for roles/internal/lxdRemote
+- name: Set LXD default server to current inventory host
+  delegate_to: localhost
+  command: lxc remote switch "{{ item }}"
+  with_items: "{{ lxdHosts }}"

@@ -1,0 +1,34 @@
+---
+# tasks file for roles/internal/runHass
+- name: Apply forward port rule (firewalld module doesn't currently support this)
+  command:
+    cmd: "firewall-cmd --zone={{ HostZone }} --add-forward-port=port={{ HassPort }}:proto=tcp:toport={{ HassPort }}:toaddr={{ ansible_default_ipv4.address }} --permanent"
+  become: true
+  register: fw_result
+  delegate_to: "{{ item }}"
+  with_items: "{{ lxdHosts }}"
+
+- name: Reload the firewall rules to activate the port forwarding
+  command:
+    cmd: "firewall-cmd --reload"
+  become: true
+  delegate_to: "{{ item }}"
+  with_items: "{{ lxdHosts }}"
+  when: fw_result is succeeded
+
+- name: Create and start Home Assistant container
+  docker_container:
+    name: "{{ HassName }}-{{ HassTag }}"
+    image: "docker.io/homeassistant/home-assistant:{{ HassTag }}"
+    state: started
+    detach: yes
+    restart: yes
+    init: yes
+    env:
+      TZ: "{{ TZ }}"
+    volumes:
+      - "{{ HassConfig }}:/config"
+    network_mode: "{{ docker_network_name }}"
+    #published_ports: 
+    # - "{{ HassPort }}:{{ HassPort }}"
+  when: fw_result is succeeded

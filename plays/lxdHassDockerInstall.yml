@@ -1,0 +1,23 @@
+---
+# ./lxdDockerInstall.yml
+#
+- name: Set LXD remote connection
+  hosts: localhost  
+  connection: local
+  gather_facts: false
+  roles:
+    - lxdRemote
+
+- name: Install Docker and pull Home Assistant
+  hosts: containers
+  gather_facts: true
+  roles:
+    #- ubuntuDockerInstall
+    #- NFSSetup
+    - runHass
+- name: Reset LXD remote back to local
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - lxdLocal

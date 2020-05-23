@@ -1,0 +1,6 @@
+---
+# tasks file for roles/internal/lxdLocal
+- name: Set LXD default server back to local
+  delegate_to: localhost
+  command: lxc remote switch local
+  run_once: true
