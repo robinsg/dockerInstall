@@ -1,0 +1,15 @@
+---
+# ./ubuntuDockerHassInstall.yml
+#
+- name: Install Docker and pull Home Assistant
+  hosts: ubuntu
+  gather_facts: true
+  become: true
+  roles:
+    - ubuntuDockerInstall
+    - NFSSetup
+    - runHass
+  vars_prompt:
+  - name: userName
+    prompt: "Name of user to add to docker group?"
+    private: no

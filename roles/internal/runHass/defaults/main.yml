@@ -3,7 +3,7 @@
 HassConfig: "/mnt/containers/hass/config"
 HassPort: 8123
 HassName: "home-assistant"
-HassTag: 0.110.0
+HassTag: 0.112.2
 docker_network_name: "host"
 TZ: "Europe/London"
 HostZone: public

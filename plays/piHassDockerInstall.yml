@@ -1,0 +1,13 @@
+---
+# ./piDockerHassInstall.yml
+#
+- name: Update and upgrade pi
+  gather_facts: True
+  roles:
+     - AptUpdates
+  
+- name: Install Docker and pull Home Assistant
+  hosts: containers
+  gather_facts: true
+  roles:
+    - ubuntuDockerInstall
